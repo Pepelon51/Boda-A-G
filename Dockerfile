@@ -1,11 +1,18 @@
-FROM node:24-alpine AS builder
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
+# Copiar archivos de configuración
 COPY package*.json ./
-RUN npm ci || npm install  # npm ci también requiere lockfile, así que fallback a install
+COPY tsconfig*.json ./
 
+# Instalar TODAS las dependencias (incluyendo devDependencies)
+RUN npm install
+
+# Copiar el resto del código
 COPY . .
+
+# TypeScript y Vite estarán disponibles porque se instalaron
 RUN npm run build
 
 FROM nginx:alpine
