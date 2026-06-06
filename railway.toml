@@ -1,0 +1,10 @@
+[build]
+builder = "RAILPACK"
+buildCommand = "npm ci && npm run build"
+
+[variables]
+NODE_VERSION = "24"
+
+[deploy]
+startCommand = "npm start"
+healthcheckPath = "/"
