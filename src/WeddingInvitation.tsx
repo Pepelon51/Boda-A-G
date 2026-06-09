@@ -16,7 +16,7 @@ import { useScrollReveal } from './hooks/useScrollReveal';
 import CustomCursor from './components/CustomCursor';
 import AudioControl from './components/AudioControl';
 import Lightbox from './components/Lightbox';
-import EnvelopeIntro from './components/EnvelopeIntro';
+import SimpleIntro from './components/SimpleIntro';
 import SunGlintOverlay from './components/ui/SunGlintOverlay';
 import CoastalBreezeParticles from './components/ui/CoastalBreezeParticles';
 import Interactive3DTilt from './components/ui/Interactive3DTilt';
@@ -72,36 +72,31 @@ export default function WeddingInvitation() {
   // EFFECTS
   // ══════════════════════════════════════════════════
 
-  // Precarga audio en memoria al montar + bloquea scroll hasta que el usuario entre
+  // Bloquea scroll hasta que el usuario entre
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    // Precarga el audio como blob para reproducción instantánea al tocar.
-    // Solo actualiza el src si el audio NO está sonando, para evitar
-    // interrumpir una reproducción que ya inició.
+    document.body.style.overflow = isScrollUnlocked ? '' : 'hidden';
+    return () => { document.body.style.overflow = ''; };
+  }, [isScrollUnlocked]);
+
+  // Precarga audio en memoria al montar
+  useEffect(() => {
     fetch(musicTrack)
       .then(r => r.blob())
       .then(blob => {
         if (!audioRef.current) return;
-        if (!audioRef.current.paused) return; // ya sonando — no interrumpir
+        if (!audioRef.current.paused) return;
         const url = URL.createObjectURL(blob);
         audioRef.current.src = url;
         audioRef.current.load();
       })
       .catch(() => {});
-    return () => { document.body.style.overflow = ''; };
   }, []);
-
-  // Desbloquea el scroll al entrar
-  useEffect(() => {
-    if (isScrollUnlocked) document.body.style.overflow = '';
-    else document.body.style.overflow = 'hidden';
-  }, [isScrollUnlocked]);
 
   // ══════════════════════════════════════════════════
   // ACTIONS & HANDLERS
   // ══════════════════════════════════════════════════
 
-  // El usuario presionó "Comenzar" en el sobre → inicia música + video
+  // El usuario presionó "Comenzar" → inicia música + video
   const handleBegin = () => {
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
@@ -111,10 +106,8 @@ export default function WeddingInvitation() {
     if (videoRef.current) videoRef.current.play().catch(() => {});
   };
 
-  // El sobre terminó su animación → mostrar la invitación
-  const handleEnvelopeComplete = () => {
-    setIsScrollUnlocked(true);
-  };
+  // El intro terminó → mostrar la invitación
+  const handleIntroComplete = () => setIsScrollUnlocked(true);
 
   // Botón inferior: pausa / reanuda
   const handleToggleAudio = () => {
@@ -255,8 +248,8 @@ export default function WeddingInvitation() {
         cursorHoverProps={cursorHoverProps}
       />
 
-      {/* Sobre de entrada — primera pantalla */}
-      <EnvelopeIntro onBegin={handleBegin} onComplete={handleEnvelopeComplete} />
+      {/* Intro — iniciales + botón Comenzar */}
+      <SimpleIntro onBegin={handleBegin} onComplete={handleIntroComplete} />
 
       {/* ══ NAV BAR (GLASSMORPHISM EDITORIAL) ══ */}
       <nav className="fixed top-0 left-0 right-0 z-50 h-14 md:h-16 flex items-center bg-sand-50/80 backdrop-blur-md border-b border-sand-200/40 select-none">
@@ -693,29 +686,6 @@ export default function WeddingInvitation() {
                       {pin.label}
                     </a>
                   ))}
-                </div>
-              </div>
-
-              {/* Paleta de Colores */}
-              <div className="mb-10 mt-8">
-                <p className="font-sans text-[8px] tracking-super uppercase text-accent-gold/70 mb-4">Paleta de Colores Sugerida</p>
-                <div className="flex justify-center gap-6 flex-wrap">
-                  <div className="flex flex-col items-center gap-2">
-                    <div className="w-16 h-16 rounded-full shadow-md border border-sand-200/40 transition-transform hover:scale-110" style={{ backgroundColor: "#52644E" }}></div>
-                    <span className="font-sans text-[7px] uppercase tracking-wider text-coastal-800/70">Verde</span>
-                  </div>
-                  <div className="flex flex-col items-center gap-2">
-                    <div className="w-16 h-16 rounded-full shadow-md border border-sand-200/40 transition-transform hover:scale-110" style={{ backgroundColor: "#634F3D" }}></div>
-                    <span className="font-sans text-[7px] uppercase tracking-wider text-coastal-800/70">Café</span>
-                  </div>
-                  <div className="flex flex-col items-center gap-2">
-                    <div className="w-16 h-16 rounded-full shadow-md border border-sand-200/40 transition-transform hover:scale-110" style={{ backgroundColor: "#A38971" }}></div>
-                    <span className="font-sans text-[7px] uppercase tracking-wider text-coastal-800/70">Café Claro</span>
-                  </div>
-                  <div className="flex flex-col items-center gap-2">
-                    <div className="w-16 h-16 rounded-full shadow-md border border-sand-200/40 transition-transform hover:scale-110" style={{ backgroundColor: "#C0A97E" }}></div>
-                    <span className="font-sans text-[7px] uppercase tracking-wider text-coastal-800/70">Beige</span>
-                  </div>
                 </div>
               </div>
 
