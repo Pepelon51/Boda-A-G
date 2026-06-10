@@ -334,19 +334,11 @@ export default function WeddingInvitation() {
                   María de la Luz Hernández Cruz
                 </p>
               </div>
-              <div className="flex flex-col gap-6">
-                <div className="text-center">
-                  <p className="font-sans text-[8px] tracking-super uppercase text-accent-gold/70 mb-3">Padre del Novio</p>
-                  <p className="font-serif italic font-normal text-[14px] md:text-[15px] text-white/90 leading-relaxed">
-                    Gustavo Luján Flores
-                  </p>
-                </div>
-                <div className="text-center">
-                  <p className="font-sans text-[8px] tracking-super uppercase text-accent-gold/70 mb-3">Madre del Novio</p>
-                  <p className="font-serif italic font-normal text-[14px] md:text-[15px] text-white/90 leading-relaxed">
-                    Rita Flores García
-                  </p>
-                </div>
+              <div className="flex flex-col items-center justify-center text-center">
+                <p className="font-sans text-[8px] tracking-super uppercase text-accent-gold/70 mb-3">Madre del Novio</p>
+                <p className="font-serif italic font-normal text-[14px] md:text-[15px] text-white/90 leading-relaxed">
+                  Rita Flores García
+                </p>
               </div>
             </div>
           </div>
@@ -486,7 +478,7 @@ export default function WeddingInvitation() {
             <div>
               <div className="flex items-center gap-3 mb-6 reveal">
                 <div className="w-6 h-[1px] bg-accent-gold/50 shrink-0"></div>
-                <span className="font-sans text-[8px] tracking-super uppercase text-accent-gold font-semibold whitespace-nowrap">Miércoles · 03 de Septiembre</span>
+                <span className="font-sans text-[11px] tracking-super uppercase text-accent-gold font-semibold whitespace-nowrap">Jueves · 03 de Septiembre</span>
                 <div className="flex-1 h-[1px] bg-accent-gold/20"></div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
@@ -522,7 +514,7 @@ export default function WeddingInvitation() {
             <div>
               <div className="flex items-center gap-3 mb-6 reveal">
                 <div className="w-6 h-[1px] bg-accent-gold/50 shrink-0"></div>
-                <span className="font-sans text-[8px] tracking-super uppercase text-accent-gold font-semibold whitespace-nowrap">Jueves · 04 de Septiembre · ✦ El Gran Día</span>
+                <span className="font-sans text-[11px] tracking-super uppercase text-accent-gold font-semibold whitespace-nowrap">Viernes · 04 de Septiembre · ✦ El Gran Día</span>
                 <div className="flex-1 h-[1px] bg-accent-gold/20"></div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
@@ -594,8 +586,16 @@ export default function WeddingInvitation() {
                     <h3 className="font-serif italic font-light text-2xl md:text-3xl text-coastal-800 mb-2">After Party</h3>
                     <p className="font-serif italic text-[14px] text-accent-bronze/90">Puerto Vallarta, Jalisco</p>
                   </div>
-                  <div className="relative z-10 shrink-0">
+                  <div className="relative z-10 shrink-0 flex flex-col items-start md:items-end gap-3">
                     <p className="font-serif italic text-[12px] text-coastal-800/50 max-w-xs leading-relaxed">Continúa la celebración con nosotros. ¡Nos encantaría tenerte!</p>
+                    <a
+                      href="#rsvp"
+                      className="inline-flex items-center gap-2 font-sans text-[8.5px] tracking-wider uppercase border border-coastal-800/20 hover:border-accent-gold text-coastal-800 px-5 py-2.5 transition-all duration-500 bg-transparent hover:bg-coastal-800 hover:text-white rounded-sm cursor-none relative overflow-hidden z-10"
+                      {...cursorHoverProps}
+                    >
+                      <SunGlintOverlay periodic={false} />
+                      <span className="relative z-10">Confirmar Asistencia</span>
+                    </a>
                   </div>
                 </Interactive3DTilt>
               </div>
@@ -605,7 +605,7 @@ export default function WeddingInvitation() {
             <div>
               <div className="flex items-center gap-3 mb-6 reveal">
                 <div className="w-6 h-[1px] bg-accent-gold/50 shrink-0"></div>
-                <span className="font-sans text-[8px] tracking-super uppercase text-accent-gold font-semibold whitespace-nowrap">Viernes · 05 de Septiembre</span>
+                <span className="font-sans text-[11px] tracking-super uppercase text-accent-gold font-semibold whitespace-nowrap">Sábado · 05 de Septiembre</span>
                 <div className="flex-1 h-[1px] bg-accent-gold/20"></div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
@@ -625,7 +625,7 @@ export default function WeddingInvitation() {
             <div>
               <div className="flex items-center gap-3 mb-6 reveal">
                 <div className="w-6 h-[1px] bg-accent-gold/50 shrink-0"></div>
-                <span className="font-sans text-[8px] tracking-super uppercase text-accent-gold font-semibold whitespace-nowrap">Sábado · 06 de Septiembre</span>
+                <span className="font-sans text-[11px] tracking-super uppercase text-accent-gold font-semibold whitespace-nowrap">Domingo · 06 de Septiembre</span>
                 <div className="flex-1 h-[1px] bg-accent-gold/20"></div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
@@ -767,17 +767,6 @@ export default function WeddingInvitation() {
               </a>
             </Interactive3DTilt>
 
-            {/* Lluvia de sobres */}
-            <Interactive3DTilt maxRotation={4} className="md:col-span-12 bg-sand-100/50 border border-sand-200/80 p-10 md:p-12 text-center flex flex-col items-center justify-center gap-4 rounded-sm relative group overflow-hidden reveal reveal-d4">
-              <SunGlintOverlay periodic={true} />
-              <div className="absolute inset-1.5 border border-accent-gold/15 rounded-[1px] pointer-events-none z-10"></div>
-              <span className="font-serif italic text-xs text-accent-gold tracking-[0.2em] relative z-10">III</span>
-              <p className="font-serif italic font-light text-2xl text-coastal-800 relative z-10">Lluvia de Sobres</p>
-              <p className="font-serif italic text-[13.5px] leading-relaxed text-coastal-800 max-w-xs mb-4 relative z-10 font-normal">
-                Tendremos una caja especial para sobres el día del evento en la recepción. Tu presencia es nuestro mayor regalo.
-              </p>
-              <span className="font-sans text-[8px] tracking-super uppercase border border-accent-gold/40 text-accent-gold px-5 py-2.5 bg-transparent rounded-sm select-none relative z-10">El día del evento</span>
-            </Interactive3DTilt>
           </div>
         </div>
       </section>
@@ -844,14 +833,8 @@ export default function WeddingInvitation() {
             </div>
 
             <p className="font-serif italic text-base md:text-lg text-white/70 max-w-xl mx-auto leading-relaxed mb-6 reveal reveal-d2 font-normal">
-              ¡Queremos compartir este momento tan esperado contigo! Por favor ayúdanos confirmando tu asistencia.
+              El after party es opcional — si deseas unirte a la celebración continua, por favor confírmanos tu asistencia a través de este formulario.
             </p>
-
-            <div className="flex items-center justify-center gap-3 reveal reveal-d3">
-              <span className="w-6 h-[1px] bg-accent-gold/25"></span>
-              <span className="font-sans text-[8px] uppercase tracking-super text-accent-gold/60 font-semibold">Evento para adultos · No niños</span>
-              <span className="w-6 h-[1px] bg-accent-gold/25"></span>
-            </div>
           </div>
 
           {/* Interactive React Flow RSVP Sheet */}
@@ -924,7 +907,7 @@ export default function WeddingInvitation() {
                 <div className="flex flex-col gap-8 animate-fadeIn">
                   <div className="text-center py-4 select-none">
                     <p className="font-serif italic text-lg text-coastal-800 mb-2">Hola, {rsvpData.nombre}</p>
-                    <p className="font-serif italic text-sm text-coastal-800 leading-relaxed font-normal">¿Contamos con tu grata presencia el 4 de Septiembre en nuestra After Party?</p>
+                    <p className="font-serif italic text-sm text-coastal-800 leading-relaxed font-normal">¿Contamos con tu presencia en el After Party del 4 de Septiembre a partir de las 23:30 hrs?</p>
                   </div>
 
                   <div className="flex flex-col gap-4 border-t border-b border-sand-200/60 py-6 select-none">
