@@ -129,7 +129,7 @@ export default function WeddingInvitation() {
     }
     if (rsvpStep === 2 && !rsvpData.asistencia) return;
     if (rsvpStep === 2) {
-      rsvpData.asistencia === 'no' ? await handleSubmitRSVP() : setRsvpStep(3);
+      setRsvpStep(3);
     } else if (rsvpStep === 3) {
       await handleSubmitRSVP();
     }
@@ -145,7 +145,7 @@ export default function WeddingInvitation() {
       nombre: rsvpData.nombre,
       telefono: rsvpData.telefono || '—',
       asistencia: rsvpData.asistencia === 'si' ? 'Sí asiste' : 'No asiste',
-      personas: rsvpData.asistencia === 'si' ? rsvpData.personas : 0,
+      personas: rsvpData.asistencia === 'si' ? rsvpData.personas : 1,
       dieta: rsvpData.dieta,
       alergias: rsvpData.alergiaDetalles || '—',
       mensaje: rsvpData.mensaje || '—',
@@ -963,32 +963,34 @@ export default function WeddingInvitation() {
                             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/>
                           </svg>
                         )}
-                        {rsvpLoading ? 'Enviando...' : rsvpData.asistencia === 'no' ? 'Confirmar' : 'Continuar'}
+                        {rsvpLoading ? 'Enviando...' : 'Continuar'}
                       </span>
                     </button>
                   </div>
                 </div>
               )}
 
-              {/* STEP 3: Dietary requirements & message (if attendance is YES) */}
+              {/* STEP 3: Dietary requirements & message (always shown) */}
               {rsvpStep === 3 && (
                 <div className="flex flex-col gap-8 animate-fadeIn">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="flex flex-col gap-2">
-                      <label className="font-sans text-[11px] uppercase tracking-super text-coastal-800/80 font-bold">Número de Pases a Reservar</label>
-                      <div className="relative">
-                        <select
-                          value={rsvpData.personas}
-                          onChange={(e) => setRsvpData(prev => ({ ...prev, personas: Number(e.target.value) }))}
-                          className="w-full bg-transparent border-b border-coastal-800/10 focus:border-accent-gold outline-none py-2 text-coastal-800 font-serif italic text-lg font-normal transition-colors duration-300 appearance-none rounded-none cursor-pointer"
-                        >
-                          {Array.from({ length: 10 }, (_, i) => i + 1).map(num => (
-                            <option key={num} value={num} className="bg-sand-100 font-serif italic py-2">{num} {num === 1 ? 'Persona' : 'Personas'}</option>
-                          ))}
-                        </select>
-                        <span className="absolute right-2 bottom-3 text-coastal-800/70 pointer-events-none text-xs">&#9662;</span>
+                  <div className={`grid grid-cols-1 gap-8 ${rsvpData.asistencia === 'si' ? 'md:grid-cols-2' : ''}`}>
+                    {rsvpData.asistencia === 'si' && (
+                      <div className="flex flex-col gap-2">
+                        <label className="font-sans text-[11px] uppercase tracking-super text-coastal-800/80 font-bold">Número de Pases a Reservar</label>
+                        <div className="relative">
+                          <select
+                            value={rsvpData.personas}
+                            onChange={(e) => setRsvpData(prev => ({ ...prev, personas: Number(e.target.value) }))}
+                            className="w-full bg-transparent border-b border-coastal-800/10 focus:border-accent-gold outline-none py-2 text-coastal-800 font-serif italic text-lg font-normal transition-colors duration-300 appearance-none rounded-none cursor-pointer"
+                          >
+                            {Array.from({ length: 10 }, (_, i) => i + 1).map(num => (
+                              <option key={num} value={num} className="bg-sand-100 font-serif italic py-2">{num} {num === 1 ? 'Persona' : 'Personas'}</option>
+                            ))}
+                          </select>
+                          <span className="absolute right-2 bottom-3 text-coastal-800/70 pointer-events-none text-xs">&#9662;</span>
+                        </div>
                       </div>
-                    </div>
+                    )}
 
                     <div className="flex flex-col gap-2">
                       <label className="font-sans text-[11px] uppercase tracking-super text-coastal-800/80 font-bold">Restricciones o Preferencia de Menú</label>
